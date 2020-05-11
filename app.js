@@ -11,8 +11,8 @@ const errorHandler = require('./middlewares/errorHandler')
 const app = new Koa()
 
 // database connecting
-app.use(cors())
 app.use(logger())
+app.use(cors())
 app.use(bodyParser())
 app.use(helmet())
 app.use(compress())

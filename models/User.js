@@ -16,7 +16,8 @@ const schema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['ADMIN', 'TALLERISTA']
+    enum: ['ADMIN', 'TALLERISTA'],
+    default: 'TALLERISTA'
   },
   createdAt: {
     type: Date, default: Date.now
