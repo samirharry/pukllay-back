@@ -6,9 +6,9 @@ module.exports = {
   async login (ctx) {
     const { body } = ctx.request
     const user = await User.findOne({ email: body.email, status: 'ACTIVE' }, 'id password name role')
-    console.log(!user)
+    console.log(user)
     if (!user) ctx.throw(404, { ok: false, data: { message: 'usuario no existe' } })
-    const isValid = await bcrypt.compare(user.password, body.password)
+    const isValid = await bcrypt.compare(body.password, user.password)
     if (!isValid) ctx.throw(404, { ok: false, data: { message: 'contraseña equivocada' } })
     delete user.password
     ctx.body = {
