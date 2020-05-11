@@ -6,7 +6,9 @@ module.exports = () => async (ctx, next) => {
     ctx.status = err.status || 500
     ctx.body = {
       ok: false,
-      message: err.message
+      data: {
+        message: err.data.message
+      }
     }
   }
 }
