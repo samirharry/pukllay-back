@@ -7,7 +7,7 @@ module.exports = () => async (ctx, next) => {
     ctx.body = {
       ok: false,
       data: {
-        message: err.data.message
+        message: err.originalError ? err.originalError.message : err.data.message
       }
     }
   }

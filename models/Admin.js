@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 const schema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -17,8 +17,8 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  updatedAt: { type: Date, default: Date.now },
-  updatedBy: {
+  modifiedAt: { type: Date, default: Date.now },
+  modifiedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
@@ -31,4 +31,4 @@ const schema = new mongoose.Schema({
 
 schema.plugin(uniqueValidator)
 
-module.exports = ('Admin', schema)
+module.exports = mongoose.model('Admin', schema)

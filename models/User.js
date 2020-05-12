@@ -17,13 +17,21 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['ADMIN', 'TALLERISTA'],
-    default: 'TALLERISTA'
+    default: 'ADMIN'
   },
   createdAt: {
     type: Date, default: Date.now
   },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   modifiedAt: {
     type: Date, default: Date.now
+  },
+  modifiedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   status: {
     type: String,

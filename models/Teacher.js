@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 const schema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    unique: true
   },
   courses: [
     {
@@ -35,4 +36,4 @@ const schema = new mongoose.Schema({
 
 schema.plugin(uniqueValidator)
 
-module.exports = ('Teacher', schema)
+module.exports = mongoose.model('Teacher', schema)
