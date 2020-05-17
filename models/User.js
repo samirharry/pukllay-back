@@ -14,10 +14,29 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  role: {
-    type: String,
-    enum: ['ADMIN', 'TALLERISTA'],
-    default: 'ADMIN'
+  isAdmin: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
+  isTeacher: {
+    type: Boolean,
+    default: true,
+    required: true
+  },
+  courses: {
+    admin: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+      }
+    ],
+    teacher: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+      }
+    ]
   },
   createdAt: {
     type: Date, default: Date.now
@@ -38,6 +57,8 @@ const schema = new mongoose.Schema({
     enum: ['ACTIVE', 'DELETED', 'INACTIVE'],
     default: 'ACTIVE'
   }
+}, {
+  timestamps: { updatedAt: 'modifiedAt' }
 })
 
 schema.plugin(uniqueValidator)

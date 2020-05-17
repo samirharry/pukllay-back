@@ -1,23 +1,18 @@
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const User = require('../models/User')
-const Teacher = require('../models/Teacher')
-const Admin = require('../models/Admin')
 
 module.exports = {
   async login (ctx) {
     const { body } = ctx.request
     console.log(body)
-    const user = await User.findOne({ email: body.email, status: 'ACTIVE' }, 'id password name').lean()
+    const user = await User.findOne({ email: body.email, status: 'ACTIVE' }, 'id password name isAdmin isTeacher').populate('level.name', 'name').lean()
     if (!user) ctx.throw(401, { ok: false, data: { message: 'usuario no existe' } })
     const isValid = await bcrypt.compare(body.password, user.password)
     if (!isValid) ctx.throw(401, { ok: false, data: { message: 'contraseña equivocada' } })
     delete user.password
-    const role = (body.role === 'ADMIN') ? await Admin.findOne({ user: user._id, status: 'ACTIVE' }, 'id').lean() : await Teacher.findOne({ user: user._id, status: 'ACTIVE' }, 'id').lean()
-    console.log(role)
-    if (!role) ctx.throw(401, { ok: false, data: { message: 'Rol equivocado' } })
-    user.role = body.role
-    user.role_id = role._id
+    if ((body.level === 'ADMIN' && !user.isAdmin) || (body.level === 'TALLERISTA' && !user.isTeacher)) ctx.throw(401, { ok: false, data: { message: 'Error, nivel de usuario invalido' } })
+    user.level = body.level
     ctx.body = {
       ok: true,
       data: {

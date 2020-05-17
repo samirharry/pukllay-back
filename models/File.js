@@ -33,6 +33,8 @@ const schema = new mongoose.Schema({
     enum: ['ACTIVE', 'DELETED', 'INACTIVE'],
     default: 'ACTIVE'
   }
+}, {
+  timestamps: { updatedAt: 'modifiedAt' }
 })
 
 schema.plugin(uniqueValidator)
