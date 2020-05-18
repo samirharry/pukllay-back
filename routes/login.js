@@ -5,6 +5,7 @@ const guest = require('../middlewares/guest')
 const router = new KoaRouter()
 
 router
-  .post('/', guest(), loginValidation.login, loginController.login)
+  .post('/admin', guest(), loginValidation.loginAdmin, loginController.loginTeacher)
+  .post('/teacher', guest(), loginValidation.loginTeacher, loginController.loginAdmin)
 
 module.exports = router
