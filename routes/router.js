@@ -7,6 +7,7 @@ router
   .use('/login', require('./login').routes())
   .use(jwt({ secret: process.env.JWT_SECRET }))
   .use(payload())
+  .use('/token', require('./token').routes())
   .use('/user', require('./user').routes())
 
 module.exports = router
