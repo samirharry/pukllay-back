@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose')
 const schema = new mongoose.Schema({
+  user: {
+    type: mongoose.schema.Types.ObjectId,
+    required: true,
+    ref: 'user'
+  },
   name: {
     type: String,
     required: true
